@@ -78,6 +78,7 @@ interface IERC20 {
 }
 contract ExchangeERC20Program is IERC20 {
     mapping(address => uint256) public balance;
+    mapping(address => mapping (address => uint256)) balanceBook;
     uint256 totalSupplyVariable = 0 ether;
 
     function transfer(address to, uint256 amount) external {
@@ -93,7 +94,7 @@ contract ExchangeERC20Program is IERC20 {
 42	        return balances[owner];
 43	    }
     function allowance(address owner, address spender) public override view returns (uint) {
-60	        return allowed[owner][spender];
+60	        return balanceBook[owner][spender];
 61	    }
 
 }
