@@ -89,5 +89,8 @@ contract ExchangeERC20Program is IERC20 {
     function totalSupply() public override view returns (uint256) {
 38	    return totalSupplyVariable;
 39	    }
+    function balanceOf(address owner) public override view returns (uint256) {
+42	        return balances[owner];
+43	    }
 
 }
