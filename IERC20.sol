@@ -88,13 +88,26 @@ contract ExchangeERC20Program is IERC20 {
     }
     
     function totalSupply() public override view returns (uint256) {
-38	    return totalSupplyVariable;
-39	    }
+	    return totalSupplyVariable;
+	    }
     function balanceOf(address owner) public override view returns (uint256) {
-42	        return balances[owner];
-43	    }
+	        return balances[owner];
+	    }
     function allowance(address owner, address spender) public override view returns (uint) {
-60	        return balanceBook[owner][spender];
-61	    }
-
+	        return balanceBook[owner][spender];
+	    }
+    function approve(address spender, uint256 amount) public override returns (bool) {
+	        balanceBook[msg.sender][spender] = amount;
+	        emit Approval(msg.sender, spender, amount);
+	        return true;
+	    }
+    function transferFrom(address from, address to, uint256 amount) public override returns (bool) {
+	        require(numTokens <= balance[from]);
+	        require(numTokens <= balanceBook[from][msg.sender]);
+	        balance[from] = balances[from]-amount;
+	        balanceBook[from][msg.sender] = balanceBook[from][msg.sender]-amount;
+	        balance[to] = balances[to]+amount;
+	        emit Transfer(from, to, amount);
+	        return true;
+	    }
 }
