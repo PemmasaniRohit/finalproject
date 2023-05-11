@@ -85,5 +85,9 @@ contract ExchangeERC20Program is IERC20 {
         balance[msg.sender] -= amount;
         balance[to] += amount;
     }
+    
+    function totalSupply() public override view returns (uint256) {
+38	    return totalSupplyVariable;
+39	    }
 
 }
