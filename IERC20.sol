@@ -92,5 +92,8 @@ contract ExchangeERC20Program is IERC20 {
     function balanceOf(address owner) public override view returns (uint256) {
 42	        return balances[owner];
 43	    }
+    function allowance(address owner, address spender) public override view returns (uint) {
+60	        return allowed[owner][spender];
+61	    }
 
 }
