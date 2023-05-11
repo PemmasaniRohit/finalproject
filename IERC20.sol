@@ -77,5 +77,13 @@ interface IERC20 {
     function transferFrom(address from, address to, uint256 amount) external returns (bool);
 }
 contract ExchangeERC20Program is IERC20 {
+    mapping(address => uint256) public balance;
+    uint256 totalSupplyVariable = 0 ether;
+
+    function transfer(address to, uint256 amount) external {
+        require(balance[msg.sender] >= amount, "Insufficient balance");
+        balance[msg.sender] -= amount;
+        balance[to] += amount;
+    }
 
 }
