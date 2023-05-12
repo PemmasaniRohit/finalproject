@@ -97,17 +97,19 @@ contract ExchangeERC20Program is IERC20 {
 	        return balanceBook[owner][spender];
 	    }
     function approve(address spender, uint256 amount) public override returns (bool) {
+    		emit Approval(msg.sender, spender, amount);
 	        balanceBook[msg.sender][spender] = amount;
-	        emit Approval(msg.sender, spender, amount);
+	        
 	        return true;
 	    }
     function transferFrom(address from, address to, uint256 amount) public override returns (bool) {
-	        require(numTokens <= balance[from]);
-	        require(numTokens <= balanceBook[from][msg.sender]);
-	        balance[from] = balances[from]-amount;
-	        balanceBook[from][msg.sender] = balanceBook[from][msg.sender]-amount;
+    		emit Transfer(from, to, amount);
+	        require(amount <= balance[from]);
+	        
+		balance[from] = balances[from]-amount;
+	        balanceBook[from][msg.sender] = balanceBook[from][msg.sender] - amount;
 	        balance[to] = balances[to]+amount;
-	        emit Transfer(from, to, amount);
+	        
 	        return true;
 	    }
 }
