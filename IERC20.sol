@@ -91,7 +91,7 @@ contract ExchangeERC20Program is IERC20 {
 	    return totalSupplyVariable;
 	    }
     function balanceOf(address owner) public override view returns (uint256) {
-	        return balances[owner];
+	        return balance[owner];
 	    }
     function allowance(address owner, address spender) public override view returns (uint) {
 	        return balanceBook[owner][spender];
@@ -106,9 +106,9 @@ contract ExchangeERC20Program is IERC20 {
     		emit Transfer(from, to, amount);
 	        require(amount <= balance[from]);
 	        
-		balance[from] = balances[from]-amount;
+		balance[from] = balance[from]-amount;
 	        balanceBook[from][msg.sender] = balanceBook[from][msg.sender] - amount;
-	        balance[to] = balances[to]+amount;
+	        balance[to] = balance[to]+amount;
 	        
 	        return true;
 	    }
